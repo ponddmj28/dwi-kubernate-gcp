@@ -1447,3 +1447,90 @@ java.util.concurrent.TimeoutException
 
 !ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2020-12-09 01:05:49.722
 !MESSAGE executing callback sts4.classpath.QCPIhCcH SUCCESS [done]
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2020-12-09 02:14:12.324
+!MESSAGE ClasspathListenerHandler removeClasspathListener sts4.classpath.QCPIhCcH
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2020-12-09 02:14:12.330
+!MESSAGE unsubscribing from classpath changes: sts4.classpath.QCPIhCcH
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2020-12-09 02:14:12.336
+!MESSAGE subsribers = null
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2020-12-09 02:14:12.341
+!MESSAGE ClasspathListenerHandler removeClasspathListener sts4.classpath.QCPIhCcH => OK
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2020-12-09 02:27:24.246
+!MESSAGE ClasspathListenerHandler addClasspathListener sts4.classpath.oOqPgfKU
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2020-12-09 02:27:24.254
+!MESSAGE subscribing to classpath changes: sts4.classpath.oOqPgfKU
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2020-12-09 02:27:24.260
+!MESSAGE Setting up ClasspathListenerManager
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2020-12-09 02:27:24.266
+!MESSAGE subsribers = [sts4.classpath.oOqPgfKU]
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2020-12-09 02:27:24.272
+!MESSAGE Sending initial event for all projects ...
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2020-12-09 02:27:24.280
+!MESSAGE project DWI-Batch ...
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2020-12-09 02:27:24.287
+!MESSAGE project DWI-Frontend ...
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2020-12-09 02:27:24.292
+!MESSAGE Preparing classpath changed notification DWI-Batch
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2020-12-09 02:27:24.298
+!MESSAGE project DWI-Backend ...
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2020-12-09 02:27:24.304
+!MESSAGE exists = true open = true => deleted = false
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2020-12-09 02:27:24.310
+!MESSAGE Sending initial event for all projects DONE
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2020-12-09 02:27:24.316
+!MESSAGE ClasspathListenerHandler addClasspathListener sts4.classpath.oOqPgfKU => OK
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2020-12-09 02:27:24.324
+!MESSAGE classpath=150 entries
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2020-12-09 02:27:24.331
+!MESSAGE executing callback sts4.classpath.oOqPgfKU DWI-Batch false 150
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2020-12-09 02:27:24.437
+!MESSAGE executing callback sts4.classpath.oOqPgfKU SUCCESS [done]
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2020-12-09 02:27:24.446
+!MESSAGE Preparing classpath changed notification DWI-Backend
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2020-12-09 02:27:24.455
+!MESSAGE exists = true open = true => deleted = false
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2020-12-09 02:27:24.470
+!MESSAGE classpath=140 entries
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2020-12-09 02:27:24.478
+!MESSAGE executing callback sts4.classpath.oOqPgfKU DWI-Backend false 140
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2020-12-09 02:27:24.511
+!MESSAGE executing callback sts4.classpath.oOqPgfKU SUCCESS [done]
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2020-12-09 02:27:24.521
+!MESSAGE Preparing classpath changed notification DWI-Frontend
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2020-12-09 02:27:24.531
+!MESSAGE exists = true open = true => deleted = false
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2020-12-09 02:27:24.551
+!MESSAGE classpath=143 entries
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2020-12-09 02:27:24.560
+!MESSAGE executing callback sts4.classpath.oOqPgfKU DWI-Frontend false 143
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2020-12-09 02:27:24.609
+!MESSAGE executing callback sts4.classpath.oOqPgfKU SUCCESS [done]

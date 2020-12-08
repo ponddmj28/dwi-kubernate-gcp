@@ -47,11 +47,6 @@ spec:
               configMapKeyRef:
                 key: DB_USERNAME
                 name: dwiws-cfgmap  
-         - name: DWI_WS_URL
-           valueFrom:
-             configMapKeyRef:
-                key: DWI_WS_URL
-                name: dwiwa-cfgmap-2
          - name: TMP_OUTPUT_PATH
            value: /tmp/batch/files
          - name: SMPL_SCHD_VL
