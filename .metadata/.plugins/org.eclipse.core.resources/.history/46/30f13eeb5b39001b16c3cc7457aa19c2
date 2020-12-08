@@ -1,0 +1,15 @@
+package th.co.acc;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.openfeign.EnableFeignClients;
+
+@SpringBootApplication
+@EnableFeignClients("com.example.batch.service")
+public class DWIRestfulApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(DWIRestfulApplication.class, args);
+	}
+
+}

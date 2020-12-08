@@ -1,0 +1,60 @@
+version: '3.7'
+
+services:
+    mysql:
+      image: mysql:latest
+      ports: 
+        - "3306:3306"
+      networks:
+        - dwi-ntw
+      environment:
+        MYSQL_ROOT_PASSWORD: tosaporn
+        MYSQL_DATABASE: IVRDB
+        MYSQL_USER: ivrad
+        MYSQL_PASSWORD: tosaporn
+      volumes:
+        - mysql-dwi:/var/lib/mysql
+      
+    dwi-ws:
+      image: tosaporn/dwi-backend:0.0.1-SNAPSHOT
+      ports:
+        - "8100:8100"
+      networks:
+        - dwi-ntw
+      environment:
+        DB_HOSTNAME: mysql
+        DB_PORT: 3306
+        DB_NAME: IVRDB
+        DB_USERNAME: ivrad
+        DB_PASSWORD: tosaporn
+      depends_on:
+        - mysql
+        
+    dwi-bt:
+      image: tosaporn/dwi-batch:0.0.1-SNAPSHOT
+      ports:
+        - "8200:8200"
+      networks:
+        - dwi-ntw
+      environment:
+        DB_HOSTNAME: mysql
+        DB_PORT: 3306
+        DB_NAME: IVRDB
+        DB_USERNAME: ivrad
+        DB_PASSWORD: tosaporn
+        TMP_OUTPUT_PATH: /tmp/batch/files
+        SMPL_SCHD_VL: 0 0 0/1 * * ?
+      depends_on:
+        - mysql
+        - dwi-ws
+      volumes:
+        - tmp_output_bt:/tmp/batch/files
+        
+networks:
+  dwi-ntw:
+  
+volumes:
+  mysql-dwi:
+  image-dwi:
+  tmp_output_bt:
+  

@@ -1,0 +1,34 @@
+spring.application.name=dwi-ws
+server.port=8200
+spring.datasource.url=jdbc:mysql://${DB_HOSTNAME:localhost}:${DB_PORT:3306}/${DB_NAME:ivrdb}
+spring.datasource.username=${DB_USERNAME:ivrad}
+spring.datasource.password=${DB_PASSWORD:tosaporn}
+spring.datasource.hikari.minimumIdle=5
+spring.datasource.hikari.maximumPoolSize=20
+spring.datasource.hikari.idleTimeout=30000
+spring.datasource.hikari.maxLifetime=2000000
+spring.datasource.hikari.connectionTimeout=30000
+
+logging.level.org.springframework=DEBUG
+logging.level.com.spring.ibatis.UserMapper=DEBUG
+logging.level.org.mybatis=TRACE
+logging.level.th.co.acc.dwi.repository=DEBUG
+spring.http.log-request-details=true
+
+server.servlet.context-path=/dwi-bt
+spring.batch.job.enabled=false
+
+tmp.output.path=${TMP_OUTPUT_PATH:C:/images/files/}
+sampling.schd.value=${SMPL_SCHD_VL:0 0/2 * * * ?  }
+#0 0/2 * * * ? every 2 mins 0 0 0/1 * * ? every 3 hour
+#spring.mail.host=10.200.7.20
+#spring.mail.port=25
+#spring.mail.username=mantisbt@muangthai.co.th
+#spring.mail.password=20160707july@1
+#spring.mail.properties.mail.smtp.auth=true
+#spring.mail.properties.mail.smtp.connectiontimeout=5000
+#spring.mail.properties.mail.smtp.timeout=5000
+#spring.mail.properties.mail.smtp.writetimeout=5000
+#
+## TLS , port 587
+#spring.mail.properties.mail.smtp.starttls.enable=true

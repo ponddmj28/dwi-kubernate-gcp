@@ -1,0 +1,5 @@
+package th.co.acc.dwi.service;
+
+public interface WorkOrderService {
+
+}

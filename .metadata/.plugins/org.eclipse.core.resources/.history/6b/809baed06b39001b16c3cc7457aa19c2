@@ -1,0 +1,12 @@
+spring.application.name=dwi-ws
+server.port=8200
+
+
+logging.level.org.springframework=DEBUG
+logging.level.com.spring.ibatis.UserMapper=DEBUG
+logging.level.org.mybatis=TRACE
+logging.level.th.co.acc.dwi.repository=DEBUG
+spring.http.log-request-details=true
+
+server.servlet.context-path=/dwi-bt
+spring.batch.job.enabled=false

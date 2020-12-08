@@ -1,0 +1,17 @@
+package th.co.acc.dwi.service.adapter;
+
+import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+@Component
+public class WorkOrderServiceAdapter implements InitializingBean {
+
+	@Autowired
+	private WorkOrderService workOrderService;
+	@Override
+	public void afterPropertiesSet() throws Exception {
+		
+	}
+
+}

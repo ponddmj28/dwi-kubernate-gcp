@@ -1,0 +1,57 @@
+package th.co.acc.reader;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+
+import org.springframework.batch.item.ItemReader;
+import org.springframework.batch.item.NonTransientResourceException;
+import org.springframework.batch.item.ParseException;
+import org.springframework.batch.item.UnexpectedInputException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import th.co.acc.dwi.model.OrderList;
+import th.co.acc.dwi.model.WorkOrder;
+import th.co.acc.dwi.service.WorkOrderService;
+
+@Component
+public class WorkOrderReader implements ItemReader<WorkOrder> {
+	
+	private int nextStudentIndex = 0;
+	
+	private List<WorkOrder> works;
+	
+	@Autowired
+	private WorkOrderService workOrderService;
+	
+	@Override
+	public WorkOrder read() throws Exception, UnexpectedInputException, ParseException, NonTransientResourceException {
+		if (isNotInitialized()) {
+			works = fetchWorkOrderDataFromAPI();
+        }
+ 
+		WorkOrder nextWorkOrder = null;
+ 
+        if (nextStudentIndex < studentData.size()) {
+            nextStudent = studentData.get(nextStudentIndex);
+            nextStudentIndex++;
+        }
+ 
+        return nextStudent;
+	}
+
+	private boolean isNotInitialized() {
+        return this.works == null;
+    }
+ 
+    private List<WorkOrder> fetchWorkOrderDataFromAPI() throws Exception {
+    	OrderList order = new OrderList();
+		LocalDate date = LocalDate.now();
+		String today = date.format(DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+		order.setStartDate(today);
+		order.setEndDate(today);
+		this.works = workOrderService.getOrderListForScreen(order);
+    	return this.works;
+    }
+}

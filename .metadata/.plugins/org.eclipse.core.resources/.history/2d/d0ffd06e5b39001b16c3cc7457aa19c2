@@ -1,0 +1,8 @@
+package th.co.acc.dwi.service;
+
+import org.springframework.cloud.openfeign.FeignClient;
+
+@FeignClient(name = "order-service", url = "${DWI_WS_URL:http://localhost:8100/dwi-ws}")
+public interface WorkOrderService {
+
+}

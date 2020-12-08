@@ -1,0 +1,19 @@
+package th.co.acc.reader;
+
+import org.springframework.batch.item.ItemReader;
+import org.springframework.batch.item.NonTransientResourceException;
+import org.springframework.batch.item.ParseException;
+import org.springframework.batch.item.UnexpectedInputException;
+import org.springframework.stereotype.Component;
+
+import th.co.acc.dwi.model.WorkOrder;
+
+@Component
+public class WorkOrderReader implements ItemReader<WorkOrder> {
+	
+	@Override
+	public WorkOrder read() throws Exception, UnexpectedInputException, ParseException, NonTransientResourceException {
+		return null;
+	}
+
+}

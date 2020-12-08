@@ -1,0 +1,8 @@
+package th.co.acc.controller;
+
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class AuthenController {
+
+}

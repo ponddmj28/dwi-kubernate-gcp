@@ -1,0 +1,449 @@
+package th.co.acc.dwi.conf;
+
+
+import java.io.IOException;
+import java.io.Writer;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.sql.DataSource;
+
+import org.springframework.batch.core.StepContribution;
+import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
+import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
+import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
+import org.springframework.batch.core.configuration.annotation.StepScope;
+import org.springframework.batch.core.launch.support.RunIdIncrementer;
+import org.springframework.batch.core.scope.context.ChunkContext;
+import org.springframework.batch.core.step.tasklet.Tasklet;
+import org.springframework.batch.item.ItemProcessor;
+import org.springframework.batch.item.ItemReader;
+import org.springframework.batch.item.ItemWriter;
+import org.springframework.batch.item.adapter.ItemReaderAdapter;
+import org.springframework.batch.item.database.ItemPreparedStatementSetter;
+import org.springframework.batch.item.database.JdbcBatchItemWriter;
+import org.springframework.batch.item.database.JdbcCursorItemReader;
+import org.springframework.batch.item.database.builder.JdbcBatchItemWriterBuilder;
+import org.springframework.batch.item.file.FlatFileFooterCallback;
+import org.springframework.batch.item.file.FlatFileHeaderCallback;
+import org.springframework.batch.item.file.FlatFileItemReader;
+import org.springframework.batch.item.file.FlatFileItemWriter;
+import org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper;
+import org.springframework.batch.item.file.mapping.DefaultLineMapper;
+import org.springframework.batch.item.file.transform.BeanWrapperFieldExtractor;
+import org.springframework.batch.item.file.transform.DelimitedLineAggregator;
+import org.springframework.batch.item.file.transform.DelimitedLineTokenizer;
+import org.springframework.batch.item.file.transform.FixedLengthTokenizer;
+import org.springframework.batch.item.file.transform.Range;
+import org.springframework.batch.item.json.JacksonJsonObjectReader;
+import org.springframework.batch.item.json.JsonItemReader;
+import org.springframework.batch.item.xml.StaxEventItemReader;
+import org.springframework.batch.item.xml.StaxEventItemWriter;
+import org.springframework.batch.repeat.RepeatStatus;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.batch.BatchProperties.Job;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.oxm.jaxb.Jaxb2Marshaller;
+import org.springframework.oxm.xstream.XStreamMarshaller;
+
+import com.example.batch.conf.listener.ExamJobExecutionListener;
+import com.example.batch.conf.listener.HelloWorldStepExecutionListener;
+import com.example.batch.model.Product;
+import com.example.batch.processor.InMemItemProcessor;
+import com.example.batch.reader.InMemReader;
+import com.example.batch.reader.ProductServiceAdapter;
+import com.example.batch.writer.ConsoleItemWriter;
+import com.sun.org.apache.xerces.internal.impl.xpath.XPath.Step;
+
+@EnableBatchProcessing
+@Configuration
+public class BatchConfiguration {
+	@Autowired
+	private JobBuilderFactory jobs;
+	
+	@Autowired
+	private StepBuilderFactory step;
+	
+	@Autowired
+	private ExamJobExecutionListener examJobExecutionListener;	
+	
+	@Autowired
+	private HelloWorldStepExecutionListener helloWorldStepExecutionListener;
+	
+	@Autowired
+	private DataSource datasource;
+	
+	@Autowired
+	private ProductServiceAdapter productServiceAdapter;
+	
+//	@Bean
+//	public Step step1() {
+//		return step.get("step1")
+//				.listener(helloWorldStepExecutionListener)
+//				.tasklet(helloWorldTasklet())
+//				.build();
+//	}
+	
+	@Bean
+	public Step step2() {
+		return step.get("step2")
+				.chunk(3)
+				.reader(serviceItemReader())
+//				.reader(jsonItemReader(null))
+//				.reader(fixedFileItemReader(null))
+//				.reader(xmlItemReader(null))
+//				.reader(flatFileItemReader(null))
+//				.reader(reader())
+//				.processor(processor())
+				.writer(writer())
+				.build();
+	}
+	
+	@Bean
+	public ItemWriter<Object> writer() {
+		return new ConsoleItemWriter();
+	}
+
+	@Bean
+	public ItemProcessor<Integer,Integer> processor() {
+		return new InMemItemProcessor();
+	}
+	
+	@Bean
+	public ItemReader<Integer> reader() {
+		return new InMemReader();
+	}
+
+//	@Bean
+//	public Job helloWorldJob() {
+//		return jobs.get("helloworldJob")
+//				.incrementer(new RunIdIncrementer())
+//				.listener(examJobExecutionListener)
+//				.start(step1())
+//				.next(step2())
+//				.build();
+//	}
+	
+	private Tasklet helloWorldTasklet() {
+		return new Tasklet() {
+			
+			@Override
+			public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
+				System.out.println("Hello World");
+				return RepeatStatus.FINISHED;
+			}
+		};
+	}
+	
+	//fixed path
+//	@Bean
+//	public FlatFileItemReader<Product> flatFileItemReader() {
+//		FlatFileItemReader<Product> reader = new FlatFileItemReader<Product>();
+//		reader.setResource(new FileSystemResource("input/product.csv"));
+//		reader.setLineMapper(new DefaultLineMapper<Product>() {
+//			{
+//				setLineTokenizer(new DelimitedLineTokenizer() {
+//					{
+//						setNames(new String[] {"productID","productName","ProductDesc","price","unit"});
+//					}
+//				});
+//				setFieldSetMapper(new BeanWrapperFieldSetMapper<Product>() {
+//					{
+//						setTargetType(Product.class);
+//					}
+//				});
+//			}
+//		});
+//		reader.setLinesToSkip(1);
+//		return reader;
+//	}
+	
+	//pass parameter and delimiter by comma ,
+//	@Bean
+//	@StepScope
+//	public FlatFileItemReader<Product> flatFileItemReader(
+//			@Value("#{jobParameters[inputFile]}")
+//			FileSystemResource inputFile) {
+//		FlatFileItemReader<Product> reader = new FlatFileItemReader<Product>();
+//		reader.setResource(inputFile);
+//		reader.setLineMapper(new DefaultLineMapper<Product>() {
+//			{
+//				setLineTokenizer(new DelimitedLineTokenizer() {
+//					{
+//						setNames(new String[] {"productID","productName","ProductDesc","price","unit"});
+//						
+//					}
+//				});
+//				setFieldSetMapper(new BeanWrapperFieldSetMapper<Product>() {
+//					{
+//						setTargetType(Product.class);
+//					}
+//				});
+//			}
+//		});
+//		reader.setLinesToSkip(1);
+//		return reader;
+//	}
+	
+	//pass parameter and delimiter by comma |
+//	@Bean
+//	@StepScope
+//	public FlatFileItemReader<Product> flatFileItemReader(
+//			@Value("#{jobParameters[inputFile]}")
+//			FileSystemResource inputFile) {
+//		FlatFileItemReader<Product> reader = new FlatFileItemReader<Product>();
+//		reader.setResource(inputFile);
+//		reader.setLineMapper(new DefaultLineMapper<Product>() {
+//			{
+//				setLineTokenizer(new DelimitedLineTokenizer() {
+//					{
+//						setNames(new String[] {"productID","productName","ProductDesc","price","unit"});
+//						setDelimiter("|");
+//					}
+//				});
+//				setFieldSetMapper(new BeanWrapperFieldSetMapper<Product>() {
+//					{
+//						setTargetType(Product.class);
+//					}
+//				});
+//			}
+//		});
+//		reader.setLinesToSkip(1);
+//		return reader;
+//	}
+	//pass parameter and read by xml
+	@StepScope
+	@Bean
+	public StaxEventItemReader<?> xmlItemReader(
+			@Value("#{jobParameters[inputFile]}")
+			FileSystemResource inputFile){
+		StaxEventItemReader<?> reader = new StaxEventItemReader<>();
+		reader.setResource(inputFile);
+		reader.setFragmentRootElementName("product");
+		reader.setUnmarshaller(new Jaxb2Marshaller() {
+			{
+				setClassesToBeBound(Product.class);
+			}
+		});
+		return reader;
+	}
+	
+	//fixed length
+	@Bean
+	@StepScope
+	public FlatFileItemReader<Product> fixedFileItemReader(
+			@Value("#{jobParameters[inputFile]}")
+			FileSystemResource inputFile) {
+		FlatFileItemReader<Product> reader = new FlatFileItemReader<Product>();
+		reader.setResource(inputFile);
+		reader.setLineMapper(new DefaultLineMapper<Product>() {
+			{
+				setLineTokenizer(new FixedLengthTokenizer() {
+					{
+						setNames(new String[] {"productID","productName","ProductDesc","price","unit"});
+						setColumns(new Range(1,16)
+								,new Range(17,41)
+								,new Range(42,65)
+								,new Range(66,73)
+								,new Range(74,80));
+					}
+				});
+				setFieldSetMapper(new BeanWrapperFieldSetMapper<Product>() {
+					{
+						setTargetType(Product.class);
+					}
+				});
+			}
+		});
+		reader.setLinesToSkip(1);
+		return reader;
+	}
+	
+	@Bean
+	public JdbcCursorItemReader<Object> jdbcCursorItemReader(){
+		JdbcCursorItemReader<Object> reader = new JdbcCursorItemReader<Object>();
+		reader.setDataSource(datasource);
+		reader.setSql("select * from product");
+		reader.setRowMapper(new BeanPropertyRowMapper() {
+			{
+				setMappedClass(Product.class);
+			}
+		});
+		return reader;
+	}
+	
+	@Bean
+	@StepScope
+	public JsonItemReader<Object> jsonItemReader(
+			@Value("#{jobParameters['inputFile']}")
+			FileSystemResource inputFile) {
+		JsonItemReader<Object> reader = new JsonItemReader<>(inputFile, new JacksonJsonObjectReader<>(Product.class));
+		return reader;
+	}
+	
+	@Bean
+	public ItemReaderAdapter<Object> serviceItemReader() {
+		ItemReaderAdapter<Object> reader = new ItemReaderAdapter<Object>();
+		reader.setTargetObject(productServiceAdapter);
+		reader.setTargetMethod("nextProduct");
+		return reader;
+	}
+	
+	@Bean
+	@StepScope
+	public FlatFileItemReader<Product> flatFileItemReader(
+			@Value("#{jobParameters['fileInput']}")
+			FileSystemResource inputFile) {
+		FlatFileItemReader reader = new FlatFileItemReader();
+        reader.setResource(inputFile);
+        reader.setLinesToSkip(1);
+        reader.setLineMapper(new DefaultLineMapper(){
+            {
+                setFieldSetMapper(new BeanWrapperFieldSetMapper(){
+                    {
+                        setTargetType(Product.class);
+                    }
+                });
+
+                setLineTokenizer(new DelimitedLineTokenizer(){
+                    {
+                        setNames(new String[]{"productId","prodName","productDesc"  ,"price","unit"});
+                        setDelimiter(",");
+                    }
+                });
+            }
+        });
+
+        return reader;
+	}
+	
+	@Bean
+	@StepScope
+	public FlatFileItemWriter<Object> flatFileItemWriter(
+			@Value("#{jobParameters['fileOutput']}")
+			FileSystemResource output
+			){
+		FlatFileItemWriter writer = new FlatFileItemWriter();
+
+        writer.setResource(output);
+        writer.setLineAggregator( new DelimitedLineAggregator(){
+            {
+                setDelimiter("|");
+                setFieldExtractor(new BeanWrapperFieldExtractor(){
+                    {
+                        setNames(new String[]{"productId","prodName","productDesc","price","unit" });
+                    }
+                });
+            }
+        });
+
+        // how to write the header
+        writer.setHeaderCallback(new FlatFileHeaderCallback() {
+            @Override
+            public void writeHeader(Writer writer) throws IOException {
+                writer.write("productID,productName,ProductDesc,price,unit");
+            }
+        });
+
+        writer.setAppendAllowed(false);
+
+        writer.setFooterCallback(new FlatFileFooterCallback() {
+            @Override
+            public void writeFooter(Writer writer) throws IOException {
+                writer.write(" The file is created at " + new SimpleDateFormat().format(new Date()));
+            }
+        });
+        return writer;
+	}
+	
+//	@Bean
+//	public Step step3() {
+//		return step.get("step3")
+//				.<Product,Product>chunk(3)
+//				.reader(flatFileItemReader(null,null))
+//				.writer(flatFileItemWriter(null))
+////				.writer(staxEventItemWriter(null))
+////				.faultTolerant()
+////	            .skip(FlatFileParseException.class)
+////	            .skipLimit(10)
+//				.build();
+//	}
+//	
+//	@Bean 
+//	public Job job3() {
+//		return jobs.get("job3")
+//				.incrementer(new RunIdIncrementer())
+//				.start(step3())
+//				.build();
+//	}
+	
+		@Bean
+	   public Step step1(){
+	        return step.get("step1")
+	                .<Product,Product>chunk(3)
+	                .reader(flatFileItemReader(null))
+	                .writer(dbWriter())
+//	                .writer(staxEventItemWriter(null))
+	                .build();
+	   }
+
+	   @Bean
+	   public Job job1(){
+	        return jobs.get("job1")
+	        		.incrementer(new RunIdIncrementer())
+	                .start(step1())
+	                .build();
+	   }
+	   
+	@Bean
+	@StepScope
+	public StaxEventItemWriter<Product> staxEventItemWriter(
+			@Value("#{jobParameters['fileOutput']}")
+				FileSystemResource output){
+		XStreamMarshaller marshaller = new XStreamMarshaller();
+		Map<String,Class> aliases = new HashMap<String,Class>();
+		aliases.put("product", Product.class);
+		marshaller.setAliases(aliases);
+		marshaller.setAutodetectAnnotations(true);
+		StaxEventItemWriter writer = new StaxEventItemWriter();
+		writer.setMarshaller(marshaller);
+		writer.setResource(output);
+		writer.setRootTagName("Products");
+		return writer;
+	}
+	
+	@Bean
+	public JdbcBatchItemWriter dbWriter() {
+		JdbcBatchItemWriter writer = new JdbcBatchItemWriter();
+		writer.setDataSource(datasource);
+		writer.setSql("insert into product values (?,?,?,?,?)");
+		writer.setItemPreparedStatementSetter(new ItemPreparedStatementSetter<Product>(){
+			@Override
+			public void setValues(Product item, PreparedStatement ps) throws SQLException {
+				ps.setInt(1, item.getProductId());
+				ps.setString(2, item.getProdName());
+				ps.setString(3, item.getProductDesc());
+				ps.setBigDecimal(4, item.getPrice());
+				ps.setInt(5, item.getUnit());
+			}
+		} );
+		return writer;
+	}
+	
+	@Bean
+	public JdbcBatchItemWriter dbWriter2() {
+		return new JdbcBatchItemWriterBuilder<Product>()
+				.dataSource(datasource)
+				.sql("insert into product values (:productId,:prodName,:productDesc,:price,:unit)")
+				.beanMapped()
+				.build();
+	}
+}

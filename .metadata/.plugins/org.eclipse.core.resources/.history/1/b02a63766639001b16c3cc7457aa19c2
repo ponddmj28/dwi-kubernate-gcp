@@ -1,0 +1,16 @@
+package th.co.acc;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.cloud.openfeign.EnableFeignClients;
+
+@EnableFeignClients("th.co.acc.dwi.service")
+@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class })
+public class DWIBatchApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(DWIBatchApplication.class, args);
+	}
+
+}

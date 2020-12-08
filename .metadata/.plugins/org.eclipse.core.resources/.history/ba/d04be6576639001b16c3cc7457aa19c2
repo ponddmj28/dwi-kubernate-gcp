@@ -1,0 +1,8 @@
+package th.co.acc.schdule;
+
+import org.springframework.stereotype.Component;
+
+@Component
+public class BatchScheduled {
+
+}

@@ -1,0 +1,57 @@
+package th.co.acc.schdule;
+
+import java.io.File;
+import java.util.Date;
+
+import org.springframework.batch.core.Job;
+import org.springframework.batch.core.JobExecution;
+import org.springframework.batch.core.JobParameters;
+import org.springframework.batch.core.JobParametersBuilder;
+import org.springframework.batch.core.launch.JobLauncher;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
+
+@Component
+public class BatchScheduler {
+	
+	@Autowired
+    private JobLauncher jobLauncher;
+	
+	@Autowired
+	@Qualifier("workOrderJobXML")
+	private Job jobXml;
+	
+	@Autowired
+	@Qualifier("workOrderJobCsv")
+	private Job jobCsv;
+	
+	@Value("${tmp.output.path}")
+	private String pathOutput;
+	
+	@Scheduled(cron = "${sampling.schd.value}")
+	public void generateXML() throws Exception {
+
+		System.out.println("Job Started at :" + new Date());
+		File name = new File(pathOutput,"workorder_"+System.currentTimeMillis()+".xml");
+		JobParameters param = new JobParametersBuilder().addString("fileOutput", name.getAbsolutePath()).addLong( "time.millis", System.currentTimeMillis(), true)
+				.toJobParameters();
+		JobExecution execution = jobLauncher.run(jobXml,param);
+
+		System.out.println("Job finished with status :" + execution.getStatus());
+	}
+	
+	@Scheduled(cron = "${sampling.schd.value}")
+	public void generateCsv() throws Exception {
+
+		System.out.println("Job Started at :" + new Date());
+		File name = new File(pathOutput,"workorder_"+System.currentTimeMillis()+".csv");
+		JobParameters param = new JobParametersBuilder().addString("fileOutput", name.getAbsolutePath()).addLong( "time.millis", System.currentTimeMillis(), true)
+				.toJobParameters();
+		JobExecution execution = jobLauncher.run(jobCsv,param);
+
+		System.out.println("Job finished with status :" + execution.getStatus());
+	}
+}
