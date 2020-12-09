@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>th.co.acc</groupId>
 	<artifactId>dwi-bt</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.2-SNAPSHOT</version>
 	<name>dwi-batch</name>
 	<description>Drop Wiring Installing Batch</description>
 	<packaging>jar</packaging>
@@ -120,6 +120,11 @@
 	        <artifactId>xstream</artifactId>
 	    </dependency>
 		
+		<dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+        </dependency>
+        
         <!-- XML required end -->
 	</dependencies>
 
