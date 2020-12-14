@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>th.co.acc</groupId>
 	<artifactId>dwi-bked</artifactId>
-	<version>0.0.3-SNAPSHOT</version>
+	<version>0.0.4-SNAPSHOT</version>
 	<name>dwi-backend</name>
 	<description>Drop Wiring Installing Web Service</description>
 	<packaging>jar</packaging>
@@ -79,6 +79,29 @@
 		  <groupId>org.springframework.cloud</groupId>  
 		  <artifactId>spring-cloud-starter-sleuth</artifactId>  
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-sleuth-zipkin</artifactId>
+		</dependency>
+		<dependency>
+	        <groupId>org.springframework.boot</groupId>
+	        <artifactId>spring-boot-starter-actuator</artifactId>
+	    </dependency>
+		
+		<!--Zipkin-Rabbit  -->
+		<!-- <dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-zipkin</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.amqp</groupId>
+			<artifactId>spring-rabbit</artifactId>
+		</dependency> -->
+	    <!--Eureka  -->
+	    <!-- <dependency>
+	        <groupId>org.springframework.cloud</groupId>
+	        <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+	    </dependency> -->
 	</dependencies>
 
 	<dependencyManagement>

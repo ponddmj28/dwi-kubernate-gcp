@@ -32,7 +32,8 @@ spec:
              configMapKeyRef:
                 key: IMAGE_STORE_PATH
                 name: dwiwa-cfgmap-2
-        image: tosaporn/dwi-frontend:0.0.3-SNAPSHOT
+        image: tosaporn/dwi-frontend:0.0.4-SNAPSHOT
+        imagePullPolicy: Always
         name: dwi-wa
         volumeMounts:
         - mountPath: /temp/images/imagesUpload
@@ -42,14 +43,14 @@ spec:
             path: /dwi-wa/isAlive
             port: 8080
           failureThreshold: 5
-          periodSeconds: 10
+          periodSeconds: 20
           initialDelaySeconds: 60
         livenessProbe:
           httpGet:
             path: /dwi-wa/isAlive
             port: 8080
           failureThreshold: 5
-          periodSeconds: 10
+          periodSeconds: 20
           initialDelaySeconds: 60
       restartPolicy: Always
       volumes:

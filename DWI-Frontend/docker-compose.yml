@@ -1,12 +1,37 @@
 version: '3.7'
-
 services:
+    rabbitmq:
+      image: rabbitmq:3-management
+      ports:
+        - "5672:5672"
+        - "15672:15672"
+      networks:
+        - dwi-ntw
+        
+    zipkin:
+      image: openzipkin/zipkin
+      container_name: zipkin
+      environment:
+         STORAGE_TYPE: mem
+         RABBIT_URL: amqp://guest:guest@rabbitmq:5672
+         JAVA_OPTS: -Dlogging.level.zipkin2=DEBUG -Dlogging.level.zipkin=DEBUG
+         ZIPKIN_LOG_LEVEL: DEBUG
+      ports:
+        - "9411:9411"
+      depends_on:
+        - rabbitmq
+      networks:
+        - dwi-ntw
+        
     mysql:
       image: mysql:latest
       ports: 
         - "3306:3306"
       networks:
         - dwi-ntw
+      depends_on:
+        - rabbitmq
+        - zipkin
       environment:
         MYSQL_ROOT_PASSWORD: tosaporn
         MYSQL_DATABASE: IVRDB
@@ -14,9 +39,17 @@ services:
         MYSQL_PASSWORD: tosaporn
       volumes:
         - mysql-dwi:/var/lib/mysql
-      
+    
+#    naming-server:
+#      image: tosaporn/netflix-eureka-naming-server:0.0.1-SNAPSHOT
+#      ports:
+#          - "8761:8761"
+#      restart: always
+#      networks:
+#          - dwi-ntw
+          
     dwi-ws:
-      image: tosaporn/dwi-backend:0.0.1-SNAPSHOT
+      image: tosaporn/dwi-backend:0.0.4-SNAPSHOT
       ports:
         - "8100:8100"
       networks:
@@ -27,28 +60,36 @@ services:
         DB_NAME: IVRDB
         DB_USERNAME: ivrad
         DB_PASSWORD: tosaporn
+        RABBIT_URL: amqp://guest:guest@rabbitmq:5672
       depends_on:
         - mysql
+        - rabbitmq
+        - zipkin
+        #- naming-server
       volumes:
         - image-dwi:/tmp/images/imagesUpload
         
     dwi-wa:
-      image: tosaporn/dwi-frontend:0.0.1-SNAPSHOT
+      image: tosaporn/dwi-frontend:0.0.4-SNAPSHOT
       ports:
         - "8080:8080"
       networks:
         - dwi-ntw
       environment:
         IMAGE_STORE_PATH: /temp/images/imagesUpload
-        DWI_WS_URL: http://dwi-ws:8100
+        DWI_WS_URL: http://dwi-ws:8100/dwi-ws
+        RABBIT_URL: amqp://guest:guest@rabbitmq:5672
       depends_on:
         - mysql
         - dwi-ws
+        - rabbitmq
+        - zipkin
+        #- naming-server
       volumes:
         - image-dwi:/tmp/images/
     
     dwi-bt:
-      image: tosaporn/dwi-batch:0.0.1-SNAPSHOT
+      image: tosaporn/dwi-batch:0.0.4-SNAPSHOT
       ports:
         - "8200:8200"
       networks:
@@ -61,11 +102,16 @@ services:
         DB_PASSWORD: tosaporn
         TMP_OUTPUT_PATH: /tmp/batch/files
         SMPL_SCHD_VL: 0 0 0/1 * * ?
+        RABBIT_URL: amqp://guest:guest@rabbitmq:5672
       depends_on:
         - mysql
         - dwi-ws
+        - rabbitmq
+        - zipkin
+        #- naming-server
       volumes:
         - tmp_output_bt:/tmp/batch/files
+        
 networks:
   dwi-ntw:
   

@@ -26,4 +26,5 @@ public class WebApplicationConfig {
     public Encoder feignFormEncoder () {
       return new SpringFormEncoder();
     }
+	
 }

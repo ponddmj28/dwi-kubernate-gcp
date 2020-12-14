@@ -37,6 +37,7 @@ import th.co.acc.reader.WorkOrderReader;
 @EnableBatchProcessing
 @Configuration
 public class BatchConfiguration {
+	
 	@Autowired
 	private JobBuilderFactory jobs;
 	

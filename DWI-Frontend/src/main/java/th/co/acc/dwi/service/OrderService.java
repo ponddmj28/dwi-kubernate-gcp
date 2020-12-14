@@ -2,20 +2,13 @@ package th.co.acc.dwi.service;
 
 import java.util.List;
 
-import org.springframework.beans.factory.ObjectFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.cloud.openfeign.support.SpringEncoder;
-import org.springframework.context.annotation.Bean;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 
-import feign.codec.Encoder;
-import feign.form.spring.SpringFormEncoder;
 import th.co.acc.dwi.model.OrderList;
 import th.co.acc.dwi.model.OrderPackage;
 import th.co.acc.dwi.model.StatusOrder;
@@ -25,6 +18,7 @@ import th.co.acc.dwi.model.UserInfo;
 import th.co.acc.dwi.model.WorkOrder;
 
 @FeignClient(name = "order-service", url = "${DWI_WS_URL:http://localhost:8100/dwi-ws}")
+//@FeignClient(name = "dwi-ws",contextId="order")
 public interface OrderService  {
 	
 	@RequestMapping(method = RequestMethod.POST, value ="/submitOrder" )

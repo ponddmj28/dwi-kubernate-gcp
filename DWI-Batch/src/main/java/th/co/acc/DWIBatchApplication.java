@@ -7,8 +7,9 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 @EnableFeignClients("th.co.acc.dwi.service")
 @SpringBootApplication
-//@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class })
 @EnableScheduling
+//@EnableDiscoveryClient
+//@SpringBootApplication(exclude = {ServerTracingAutoConfiguration.class,FeignTracingAutoConfiguration.class,AsyncDefaultAutoConfiguration.class})
 public class DWIBatchApplication {
 
 	public static void main(String[] args) {

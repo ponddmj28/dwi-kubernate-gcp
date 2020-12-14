@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -27,8 +28,16 @@ public class OrderJobController {
 	@Autowired
 	private OrderService orderService;
 	
+	@RequestMapping(value = "/" ,method=RequestMethod.GET)
+	public @ResponseBody String init() {
+		return isAlive();
+	}
+	@RequestMapping(value = "/healthz",method=RequestMethod.GET)
+	public @ResponseBody String isHealthz() {
+		return isAlive();
+	}
 	@RequestMapping(value = "/isAlive" ,method=RequestMethod.GET)
-	public String isAlive() {
+	public @ResponseBody String isAlive() {
 		return "{healthy:true}";
 	}
 	

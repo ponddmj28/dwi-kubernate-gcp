@@ -2,25 +2,36 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="tmp-output-bt" key="selection"/>
+		<item value="" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
-			<item value="tmp_output_bt"/>
-			<item value="dwi-ws"/>
-			<item value="packaging"/>
-			<item value="description"/>
-			<item value="file"/>
-			<item value="workOrderFlatFileItemWriter"/>
-			<item value="workOrderReader"/>
-			<item value="staxEventItemWriter"/>
-			<item value="workOrderStepXML"/>
-			<item value="workOrderJobCsv"/>
-			<item value="serviceItemReader"/>
+			<item value="&quot;/&quot;"/>
+			<item value="/"/>
+			<item value="spring-cloud-starter-openfeign"/>
+			<item value="feign-form-spring"/>
+			<item value="dROW"/>
+			<item value="D"/>
+			<item value="spring-cloud-starter-sleuth"/>
+			<item value="spring-boot-starter-actuator"/>
+			<item value="spring.application.name"/>
+			<item value="mysql"/>
+			<item value="dwi-mysql"/>
+			<item value="starter-feign"/>
+			<item value="FeignTracingAutoConfiguration"/>
+			<item value="openfeign"/>
+			<item value="feign"/>
 		</list>
 		<list key="replacehistory">
+			<item value="dwi-mysql"/>
+			<item value="#- naming-server"/>
+			<item value="amqp://guest:guest@rabbitmq:5672"/>
+			<item value="SPRING_RABBITMQ_HOST"/>
+			<item value="DB_NAME: IVRDB"/>
+			<item value="amqp:"/>
+			<item value="amqp"/>
 			<item value="tmp-output-bt"/>
 			<item value="dwi-bt"/>
 		</list>

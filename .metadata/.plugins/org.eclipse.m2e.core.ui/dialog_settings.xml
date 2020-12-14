@@ -14,6 +14,8 @@
 	</section>
 	<section name="MavenProjectImportWizardPage">
 		<list key="rootDirectory">
+			<item value="C:\Users\HP\Desktop\dwi-application\netflix-eureka-naming-server"/>
+			<item value="C:\springboot-docker\docker-crash-course\05-microservices\netflix-eureka-naming-server"/>
 			<item value="C:\Users\HP\Desktop\dwi-application\DWI-Frontend"/>
 			<item value="C:\Users\HP\Desktop\dwi-application\DWI-Backend"/>
 			<item value="C:\Users\HP\Desktop\dwi-application\DWI-Batch"/>

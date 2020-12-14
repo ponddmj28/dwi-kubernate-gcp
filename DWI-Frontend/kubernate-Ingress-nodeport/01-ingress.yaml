@@ -11,7 +11,7 @@ spec:
       - path: /dwi-wa/*
         backend:
           serviceName: dwi-wa
-          servicePort: 8080          
+          servicePort: 8080
       - path: /dwi-ws/*
         backend:
           serviceName: dwi-ws

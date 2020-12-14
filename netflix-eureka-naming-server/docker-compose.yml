@@ -1,0 +1,81 @@
+version: '3.7'
+services:
+
+    rabbitmq:
+      image: rabbitmq:latest
+      ports:
+        - "5672:5672"
+        - "15672:15672"
+      restart: always
+      networks:
+        - currency-compose-network
+     
+    zipkin-server:
+      image: openzipkin/zipkin
+      container_name: zipkin
+      environment:
+        STORAGE_TYPE: mem
+        RABBIT_URI: amqp://guest:guest@rabbitmq:5672
+      ports:
+        - "9411:9411"
+      restart: always
+      depends_on:
+        - rabbitmq
+      networks:
+        - currency-compose-network
+      
+    naming-server:
+      image: in28min/netflix-eureka-naming-server:0.0.1-SNAPSHOT
+      ports:
+          - "8761:8761"
+      restart: always
+      networks:
+          - currency-compose-network
+          
+    zuul-api-gateway:
+      image: in28min/netflix-zuul-api-gateway-server:0.0.1-SNAPSHOT
+      ports:
+          - "8765:8765"
+      restart: always
+      networks:
+          - currency-compose-network
+      environment:
+          RABBIT_URI: amqp://guest:guest@rabbitmq:5672
+      depends_on:
+          - naming-server
+          - rabbitmq
+          - zipkin-server
+      
+    currency-exchange-service:
+      image: in28min/currency-exchange-service:0.0.1-SNAPSHOT
+      ports:
+          - "8000:8000"
+      restart: always
+      networks:
+          - currency-compose-network
+      environment:
+          RABBIT_URI: amqp://guest:guest@rabbitmq:5672
+      depends_on:
+          - naming-server
+          - zuul-api-gateway
+          - rabbitmq
+          - zipkin-server
+      
+    currency-conversion-service:
+      image: in28min/currency-conversion-service:0.0.1-SNAPSHOT
+      ports:
+          - "8100:8100"
+      restart: always
+      networks:
+          - currency-compose-network
+      environment:
+          RABBIT_URI: amqp://guest:guest@rabbitmq:5672
+      depends_on:
+          - currency-exchange-service
+          - naming-server
+          - zuul-api-gateway
+          - rabbitmq
+          - zipkin-server
+          
+networks:
+  currency-compose-network:

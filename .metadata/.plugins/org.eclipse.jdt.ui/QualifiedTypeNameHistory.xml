@@ -18,12 +18,21 @@
 <fullyQualifiedTypeName name="org.springframework.beans.factory.annotation.Qualifier"/>
 <fullyQualifiedTypeName name="org.springframework.batch.item.ItemReader"/>
 <fullyQualifiedTypeName name="org.springframework.stereotype.Component"/>
-<fullyQualifiedTypeName name="java.util.List"/>
 <fullyQualifiedTypeName name="org.springframework.beans.factory.annotation.Autowired"/>
 <fullyQualifiedTypeName name="org.springframework.context.annotation.Bean"/>
 <fullyQualifiedTypeName name="org.springframework.context.annotation.Scope"/>
-<fullyQualifiedTypeName name="th.co.acc.dwi.service.util.BeanUtils"/>
 <fullyQualifiedTypeName name="org.springframework.batch.core.configuration.annotation.StepScope"/>
-<fullyQualifiedTypeName name="org.springframework.beans.factory.annotation.Value"/>
 <fullyQualifiedTypeName name="java.io.File"/>
+<fullyQualifiedTypeName name="java.util.List"/>
+<fullyQualifiedTypeName name="org.springframework.beans.factory.annotation.Value"/>
+<fullyQualifiedTypeName name="th.co.acc.dwi.service.util.BeanUtils"/>
+<fullyQualifiedTypeName name="org.springframework.cloud.client.discovery.EnableDiscoveryClient"/>
+<fullyQualifiedTypeName name="io.opentracing.contrib.spring.web.autoconfig.ServerTracingAutoConfiguration"/>
+<fullyQualifiedTypeName name="io.opentracing.contrib.spring.cloud.feign.FeignTracingAutoConfiguration"/>
+<fullyQualifiedTypeName name="org.springframework.context.annotation.Configuration"/>
+<fullyQualifiedTypeName name="io.jaegertracing.Configuration"/>
+<fullyQualifiedTypeName name="org.springframework.cloud.sleuth.instrument.web.TraceWebServletAutoConfiguration"/>
+<fullyQualifiedTypeName name="org.springframework.cloud.sleuth.instrument.web.client.feign.TraceFeignClientAutoConfiguration"/>
+<fullyQualifiedTypeName name="org.springframework.cloud.sleuth.instrument.async.AsyncDefaultAutoConfiguration"/>
+<fullyQualifiedTypeName name="org.springframework.web.bind.annotation.ResponseBody"/>
 </qualifiedTypeNameHistroy>

@@ -10,6 +10,7 @@ import th.co.acc.dwi.model.OrderList;
 import th.co.acc.dwi.model.WorkOrder;
 
 @FeignClient(name = "order-service", url = "${DWI_WS_URL:http://localhost:8100/dwi-ws}")
+//@FeignClient(name = "dwi-ws")
 public interface WorkOrderService {
 	
 	@RequestMapping(method = RequestMethod.POST, value ="/listOrders" )

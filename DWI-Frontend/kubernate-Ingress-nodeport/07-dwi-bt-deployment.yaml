@@ -56,7 +56,8 @@ spec:
            value: /tmp/batch/files
          - name: SMPL_SCHD_VL
            value: 0 0 0/1 * * ?
-        image: tosaporn/dwi-batch:0.0.1-SNAPSHOT
+        image: tosaporn/dwi-batch:0.0.4-SNAPSHOT
+        imagePullPolicy: Always
         name: dwi-bt
         volumeMounts:
         - mountPath: /tmp/batch/files
@@ -66,14 +67,14 @@ spec:
             path: /dwi-bt/isAlive
             port: 8200
           failureThreshold: 5
-          periodSeconds: 10
+          periodSeconds: 20
           initialDelaySeconds: 60
         livenessProbe:
           httpGet:
             path: /dwi-bt/isAlive
             port: 8200
           failureThreshold: 5
-          periodSeconds: 10
+          periodSeconds: 20
           initialDelaySeconds: 60
       restartPolicy: Always
       volumes:

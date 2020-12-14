@@ -47,21 +47,22 @@ spec:
               configMapKeyRef:
                 key: DB_USERNAME
                 name: dwiws-cfgmap      
-        image: tosaporn/dwi-backend:0.0.3-SNAPSHOT
+        image: tosaporn/dwi-backend:0.0.4-SNAPSHOT
+        imagePullPolicy: Always
         name: dwi-ws
         readinessProbe:
           httpGet:
             path: /dwi-ws/isAlive
             port: 8100
           failureThreshold: 5
-          periodSeconds: 10
+          periodSeconds: 20
           initialDelaySeconds: 60
         livenessProbe:
           httpGet:
             path: /dwi-ws/isAlive
             port: 8100
           failureThreshold: 5
-          periodSeconds: 10
+          periodSeconds: 20
           initialDelaySeconds: 60
       restartPolicy: Always
 ---

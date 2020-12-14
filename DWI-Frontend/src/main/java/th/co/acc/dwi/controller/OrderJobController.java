@@ -50,6 +50,12 @@ public class OrderJobController {
 	@Value("${path.storage.img}")
 	private String pathStorageImg;
 	
+	
+	@RequestMapping(value = "/healthz",method=RequestMethod.GET)
+	public @ResponseBody String isHealthz() {
+		return isAlive();
+	}
+	
 	@RequestMapping(value = "/isAlive",method=RequestMethod.GET)
 	public @ResponseBody String isAlive() {
 		return "{healthy:true}";

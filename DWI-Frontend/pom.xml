@@ -10,14 +10,14 @@
 	</parent>
 	<groupId>th.co.acc</groupId>
 	<artifactId>dwi-fr</artifactId>
-	<version>0.0.3-SNAPSHOT</version>
+	<version>0.0.4-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<name>dwi-frontend</name>
 	<description>Drop Wiring Installing Web App</description>
 
 	<properties>
 		<java.version>1.8</java.version>
-		<spring-cloud.version>Greenwich.RELEASE</spring-cloud.version>
+		<spring-cloud.version>Greenwich.RC2</spring-cloud.version>
 	</properties>
 
 	<dependencies>
@@ -82,6 +82,29 @@
 		  <groupId>org.springframework.cloud</groupId>  
 		  <artifactId>spring-cloud-starter-sleuth</artifactId>  
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-sleuth-zipkin</artifactId>
+		</dependency>
+		<dependency>
+	        <groupId>org.springframework.boot</groupId>
+	        <artifactId>spring-boot-starter-actuator</artifactId>
+	    </dependency>
+		<!--Zipkin-Rabbit  -->
+		<!-- <dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-zipkin</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.amqp</groupId>
+			<artifactId>spring-rabbit</artifactId>
+		</dependency> -->
+
+	    <!--Eureka  -->
+	   <!--  <dependency>
+	        <groupId>org.springframework.cloud</groupId>
+	        <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+	    </dependency> -->
 	</dependencies>
 
 	<dependencyManagement>

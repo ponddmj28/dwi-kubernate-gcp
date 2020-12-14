@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>th.co.acc</groupId>
 	<artifactId>dwi-bt</artifactId>
-	<version>0.0.2-SNAPSHOT</version>
+	<version>0.0.4-SNAPSHOT</version>
 	<name>dwi-batch</name>
 	<description>Drop Wiring Installing Batch</description>
 	<packaging>jar</packaging>
@@ -64,10 +64,6 @@
 		    <artifactId>commons-lang3</artifactId>
 		    <version>3.9</version>
 		</dependency>
-		<dependency>  
-		  <groupId>org.springframework.cloud</groupId>  
-		  <artifactId>spring-cloud-starter-sleuth</artifactId>  
-		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-batch</artifactId>
@@ -84,10 +80,6 @@
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-openfeign</artifactId>
-		</dependency>
-		<dependency>  
-		  <groupId>org.springframework.cloud</groupId>  
-		  <artifactId>spring-cloud-starter-sleuth</artifactId>  
 		</dependency>
 		<!-- XML required -->
         <dependency>
@@ -119,13 +111,37 @@
 	        <groupId>com.thoughtworks.xstream</groupId>
 	        <artifactId>xstream</artifactId>
 	    </dependency>
-		
+		  <!-- XML required end -->
 		<dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-mail</artifactId>
         </dependency>
-        
-        <!-- XML required end -->
+       <dependency>  
+		  <groupId>org.springframework.cloud</groupId>  
+		  <artifactId>spring-cloud-starter-sleuth</artifactId>  
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-sleuth-zipkin</artifactId>
+		</dependency>
+		<dependency>
+	        <groupId>org.springframework.boot</groupId>
+	        <artifactId>spring-boot-starter-actuator</artifactId>
+	    </dependency>
+        <!--Zipkin-Rabbit  -->
+		<!-- <dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-zipkin</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.amqp</groupId>
+			<artifactId>spring-rabbit</artifactId>
+		</dependency> -->
+	    <!-- Eureka -->
+	   <!--  <dependency>
+	        <groupId>org.springframework.cloud</groupId>
+	        <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+	    </dependency> -->
 	</dependencies>
 
 	<dependencyManagement>

@@ -77,7 +77,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.
                 authorizeRequests()
                 .antMatchers("/").permitAll()
-                .antMatchers("/isAlive*").permitAll()
+                .antMatchers("/isAlive").permitAll()
+                .antMatchers("/healthz").permitAll()
                 .antMatchers("/resources/**").permitAll()
                 .antMatchers("/login*").permitAll()
                 .antMatchers("/**").authenticated()
