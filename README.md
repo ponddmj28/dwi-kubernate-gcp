@@ -14,10 +14,10 @@ program for following up with installs was taken by developer and able to monito
 - summary report daily and monthly
 
 ## Application Architechtures
-> Project Library Management
+#### Project Library Management
   - Maven
   - Spring Boot
-> Core System
+#### Core System
   - Spring Frameworks
     - Spring Securirty
     - Spring MVC
@@ -29,16 +29,16 @@ program for following up with installs was taken by developer and able to monito
     - Spring Bean
     - Spring Context
     - etc..
-> Front End
+#### Front End
   - Jquery
   - Bootstrap
   - HTML5
-> Database
+#### Database
   - Mysql
-> Web Server
+#### Web Server
   - Apache Tomcat
-> Container pattern
+#### Container pattern
   - Docker
-> Cloud Server
+#### Cloud Server
   - GCP Kubernate
 
